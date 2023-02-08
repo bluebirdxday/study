@@ -28,9 +28,9 @@ public class Practice {
 		
 		System.out.println((int)ch);  // 65
 		
-		System.out.println(iNum1 + ch); // 자동 형변환 int + char = 10 + 65
+		System.out.println(iNum1 + ch); // 자동 형변환 int + char = 10 + 65 = 75
 		
-		System.out.println((char)(ch+10));
+		System.out.println((char)(ch+iNum1));  // K
 		
 	}
 

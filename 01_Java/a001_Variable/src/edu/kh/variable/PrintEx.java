@@ -19,7 +19,12 @@ public class PrintEx {
 		double height = 185.5;
 		
 		// 홍길동 님은 나이 30세 키 185.5cm의 남성입니다.
-		System.out.printf("%s 님은 나이 %d세 키 %.1fcm의 %c성입니다.", name, age, height, gender);
+		System.out.printf("%s 님은 나이 %d세 키 %.1fcm의 %c성입니다.", 
+				name, age, height, gender);
+		// %d : 10진 정수,  %o : 8진수,  %x : 16진수
+		// %s : 문자열,  %c : 문자
+		// %f : 실수(소수점 아래 6자리)
+		// %b : 논리형
 		
 	}
 }
