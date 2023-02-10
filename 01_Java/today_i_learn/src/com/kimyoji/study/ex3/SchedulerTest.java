@@ -24,7 +24,7 @@ public class SchedulerTest {
 			System.out.println("지원되지 않는 방식입니다.");
 		}
 		
-		scheduler.getNextCall();`
+		scheduler.getNextCall();
 		scheduler.sendCallAgent();
 		
 	}
