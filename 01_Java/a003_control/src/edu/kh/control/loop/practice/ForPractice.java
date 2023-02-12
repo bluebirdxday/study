@@ -191,13 +191,13 @@ public class ForPractice {
 		empty = num-1; 
 		star = num-empty; 
 		
-		for(int i=1; i<=num; i++, empty--, star++) {
+		for(int i=0; i<num; i++, empty--, star++) {
 			
-			for(int j=empty; j>0; j--) {
+			for(int j=0; j<empty; j++) {
 				System.out.print(" ");
 			} // 공백 출력
 			
-			for(int h=1; h<=star; h++) {
+			for(int h=0; h<star; h++) {
 				System.out.print("*");
 			} // 별 출력
 			
@@ -215,8 +215,8 @@ public class ForPractice {
 		System.out.printf("정수 입력 : ");
 		num = sc.nextInt();
 		
-		for(int i=1; i<=num; i++) {
-			for(int j=1; j<=i; j++) {
+		for(int i=0; i<num; i++) {
+			for(int j=0; j<i; j++) {
 				System.out.print("*");
 			}
 			System.out.println();
@@ -237,25 +237,20 @@ public class ForPractice {
 		int num;
 		int star;
 		int empty;
-		int starCount = 1;
 		
 		System.out.printf("정수 입력 : ");
 		num = sc.nextInt();
 		
 		empty = num-1;
 		star = 1;
-		
-		for(int i=0; i<empty; i++) {
-			starCount += 2;
-		}
 			
 		for(int i=0; i<num; i++, empty--, star+=2) {
 			
-			for(int j=empty; j>0; j--) {
+			for(int j=0; j<empty; j++) {
 				System.out.print(" ");
 			}
 			
-			for(int h=1; h<=starCount; h+=2) {
+			for(int h=0; h<star; h++) {
 				System.out.print("*");
 			}
 			
@@ -272,11 +267,60 @@ public class ForPractice {
 	
 	public void practice12() {
 		
+		
+		Scanner sc = new Scanner(System.in);
+		
+		int num;
+		int empty;
+		
+		System.out.print("정수 입력 : ");
+		num = sc.nextInt();
+		
+		empty = num-2;
+		
+		for(int i=0; i<num; i++) {
+			
+			if(i==0 || i==num-1) {
+				for(int j=0; j<num; j++) {
+					System.out.print("*");
+				}
+			}else {
+				System.out.print("*");
+				
+				for(int h=0; h<empty; h++) {
+					System.out.print(" ");
+				}
+				
+				System.out.print("*");
+			}
+			
+			System.out.println();
+		}
 	}
 	
 	
 	public void practice13() {
 		
+		Scanner sc = new Scanner(System.in);
+		
+		int num;
+		int count = 0;
+		
+		System.out.print("자연수 하나를 입력하세요 : ");
+		num = sc.nextInt();
+		
+		for(int i=1; i<=num; i++) {
+			
+			if(i%2==0 || i%3==0) {
+				System.out.print(i + " ");
+			}
+			
+			if(i%2==0 && i%3==0) {
+				count++;
+			}
+		}
+		
+		System.out.printf("\ncount : %d ",count);
 	}
 	
 	
