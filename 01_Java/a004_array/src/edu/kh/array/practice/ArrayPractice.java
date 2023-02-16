@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class ArrayPractice {
 
+	Scanner sc = new Scanner(System.in);
+	
 	public void practice1() {
 		
 		int sum = 0;
@@ -48,7 +50,7 @@ public class ArrayPractice {
 	
 	public void practice3() {
 		
-		Scanner sc = new Scanner(System.in);
+
 		int size;
 		
 		System.out.print("양의 정수 : ");
@@ -65,7 +67,6 @@ public class ArrayPractice {
 	
 	public void practice4() {
 		
-		Scanner sc = new Scanner(System.in);
 		int value;
 		int[] array = new int[5];
 		int existence = 0;
@@ -93,7 +94,6 @@ public class ArrayPractice {
 	
 	public void practice5() {
 		 
-		Scanner sc = new Scanner(System.in);
 		String str = "";
 		char search = ' ';
 		int count = 0;
@@ -125,7 +125,6 @@ public class ArrayPractice {
 	
 	public void practice6() {
 		
-		Scanner sc = new Scanner(System.in);
 		int[] array;
 		int sum = 0;
 		
@@ -153,7 +152,6 @@ public class ArrayPractice {
 		
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		char[] array = new char[14];
-		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("주민등록번호(-포함) : ");
 		
@@ -169,7 +167,6 @@ public class ArrayPractice {
 	
 	public void practice8() {
 		
-		Scanner sc = new Scanner(System.in);
 		int input;
 		int[] array;
 		
@@ -292,7 +289,6 @@ public class ArrayPractice {
 	
 	public void practice13() {
 		
-		Scanner sc = new Scanner(System.in);
 		String str;
 		int count = 0;
 		
@@ -325,7 +321,6 @@ public class ArrayPractice {
 	public void practice14() {
 		
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		Scanner sc = new Scanner(System.in);
 		
 		String[] str;
 		int size;
@@ -386,6 +381,55 @@ public class ArrayPractice {
 	public void practice18() {
 		
 		int[][] array = new int[4][4];
+
+		for(int i=0; i<array.length; i++) {
+			for(int j=0; j<array[i].length; j++) {
+
+				if(i<array.length-1 && j<array[i].length-1){
+					array[i][j] = (int)(Math.random()*10)+1;
+				}
+			}
+		}
+		
+		
+		for(int i=0; i<array.length; i++) {
+			
+			int sum=0;
+			
+			for(int j=0; j<array[i].length; j++) {
+				
+				sum += array[i][j];
+				
+				if(j==array[i].length-1) {
+					array[i][j] = sum;
+				}
+			}
+		}
+		
+		for(int i=0; i<array.length; i++) {
+			
+			int sum = 0;
+			
+			for(int j=0; j<array[i].length; j++) {
+				sum += array[j][i];
+			
+			}
+			
+			if(i==array.length-1) {
+				array[3][i] = sum;
+			}
+		}
+		
+		
+		// [3][0] => [0][0]  [1][0]  [2][0]
+		
+		for(int[] i : array) {
+			for(int j : i) {
+				System.out.printf("%3d", j);
+			}
+			System.out.println();
+		}
+		
 	}
 	
 	public void practice19() {
