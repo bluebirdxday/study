@@ -328,7 +328,7 @@ public class ArrayPractice {
 		
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		String[] array;
+		String[] array=null;
 		String[] newArray=null;
 		int size;
 		char moreInput;
@@ -361,12 +361,16 @@ public class ArrayPractice {
 				
 				newArray = new String[array.length + moreInputCount];
 				
-				newArray = Arrays.copyOf(array, array.length);
 				
-				for(int i=0; i<moreInputCount; i++) {
-					System.out.printf("%d번째 문자열 : ", i);
+				System.arraycopy(array, 0, newArray, 0, array.length);
+	
+				
+				for(int i=array.length; i<newArray.length; i++) {
+					System.out.printf("%d번째 문자열 : ", i+1);
 					newArray[i] = sc.nextLine();
 				}
+
+				array = newArray;
 			}
 			
 		}
@@ -745,8 +749,6 @@ public class ArrayPractice {
 		int bingoSize;
 		int search;
 		
-		boolean existence = false;
-		
 		System.out.print("빙고판 크기 지정 : ");
 		bingoSize = sc.nextInt();
 		
@@ -769,6 +771,9 @@ public class ArrayPractice {
 		while(true){
 			
 			int bingoCount=0;
+			boolean existence = false;
+			int diagonalBingoCheck=0;
+			int diagonalBingoCheck2=0;
 			
 			System.out.println("============== 빙고 게임 시작 ==============");
 			System.out.print("정수를 입력하시오 : ");
@@ -797,6 +802,7 @@ public class ArrayPractice {
 				System.out.println("다시 입력해주세요.");
 				continue;
 			}
+			
 				
 			
 			for(int i=0; i<array.length; i++) {
@@ -830,30 +836,23 @@ public class ArrayPractice {
 			
 			
 			for(int i=0; i<array.length; i++) {
-				
-				int bingoCheck=0;
-				
+
 				if(array[i][i]==0)
-					bingoCheck++;
+					diagonalBingoCheck++;
 				
-				if(bingoCheck==bingoSize)
+				if(diagonalBingoCheck==bingoSize) 
 					bingoCount++;
-			} // 대각선1 빙고체크
+			} // 대각선1 빙고체크 (\)
 			
 			
-			for(int i=0; i<array.length; i++) {
+			for(int i=0, j=array.length-1; i<bingoSize; i++, j--) {
+
+				if(array[j][i]==0) 
+						diagonalBingoCheck2++;
 				
-				int bingoCheck=0;
-				
-				for(int j=0; j<array[i].length; j++) {
-					
-					if(i==j && array[i][j]==0) 
-						bingoCheck++;
-				}
-				
-				if(bingoCheck==bingoSize)
+				if(diagonalBingoCheck2==bingoSize)
 					bingoCount++;
-			} // 대각선 빙고체크
+			} // 대각선2 빙고체크 (/)
 
 			
 			System.out.printf("현재 %d 빙고\n\n", bingoCount);
