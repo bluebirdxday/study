@@ -775,6 +775,7 @@ public class ArrayPractice {
 			int diagonalBingoCheck=0;
 			int diagonalBingoCheck2=0;
 			
+			
 			System.out.println("============== 빙고 게임 시작 ==============");
 			System.out.print("정수를 입력하시오 : ");
 
@@ -792,6 +793,7 @@ public class ArrayPractice {
 			
 			for(int[] i : array) {
 				for(int j : i) {
+					
 					System.out.printf("%4d", j);
 				}
 				System.out.println();
