@@ -1,6 +1,7 @@
 package edu.kh.array.practice;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ArrayPractice {
@@ -431,51 +432,25 @@ public class ArrayPractice {
 	public void practice18() {
 		
 		int[][] array = new int[4][4];
-		int total = 0;
+		
+		final int LAST_ROW_INDEX = array.length-1;  // 행 마지막 인덱스
+		final int LAST_COL_INDEX = array[0].length-1;  // 열 마지막 인덱스
 
-		for(int i=0; i<array.length; i++) {
-			for(int j=0; j<array[i].length; j++) {
+		Random random = new Random();
+		
+		for(int row=0; row<LAST_ROW_INDEX; row++) {
+			for(int col=0; col<LAST_COL_INDEX; col++) {
 				
-				if(i<array.length-1 && j<array[i].length-1){
-					array[i][j] = (int)(Math.random()*10)+1;
+				array[row][col] = random.nextInt(10)+1;
 					
-					total += array[i][j];
-				}
+				array[LAST_ROW_INDEX][LAST_COL_INDEX] += array[row][col]; // 총합 누적
+				
+				array[LAST_ROW_INDEX][col] += array[row][col]; // 각 행 마지막 열에 누적
+				array[row][LAST_COL_INDEX] += array[row][col]; // 각 열 마지막 행에 누적
+				
 			}
 		}
 		
-		
-		array[3][3] = total;
-		
-		
-		for(int i=0; i<array.length-1; i++) {
-			
-			int sum=0;
-			
-			for(int j=0; j<array[i].length; j++) {
-				
-				sum += array[i][j];
-				
-				if(j==array[i].length-1) {
-					array[i][j] = sum;
-				}
-			}
-		}
-		
-		for(int i=0; i<array.length-1; i++) {
-			
-			int sum = 0;
-			
-			for(int j=0; j<array[i].length; j++) {
-				
-				sum += array[j][i];
-				
-				if(j==array[i].length-1) {
-					array[j][i] = sum;
-				}
-			}
-		}
-
 		
 		for(int[] i : array) {
 			for(int j : i) {
