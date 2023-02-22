@@ -1,6 +1,7 @@
 package com.kimyoji.study.collection.arraylist;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.kimyoji.study.collection.Member;
 
@@ -21,13 +22,26 @@ public class MemberArrayList {
 	
 	public boolean removeMember(int memberId) {
 		
-		for(int i=0; i<arrayList.size(); i++) {
-			Member member = arrayList.get(i);
-			// get(i)는 순차관리를 하는 배열에서 사용하는 메서드
+		/*
+		 * for(int i=0; i<arrayList.size(); i++) { 
+		 * Member member = arrayList.get(i); 
+		 * // get(i)는 순차관리를 하는 배열에서 사용하는 메서드
+		 * 
+		 * int tempId = member.getMemberId(); 
+		 * if(tempId==memberId) {
+		 * arrayList.remove(i); return true; 
+		 * } }
+		 */
+		
+		Iterator<Member> ir = arrayList.iterator();
+		
+		while(ir.hasNext()) {
+			Member member = ir.next();
 			
 			int tempId = member.getMemberId();
-			if(tempId==memberId) {
-				arrayList.remove(i);
+		
+			if(tempId == memberId) {
+				arrayList.remove(member);
 				return true;
 			}
 		}

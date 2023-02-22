@@ -22,4 +22,14 @@ public class Child2 extends Parent{
 	}
 	
 	
+	// @Override : 컴파일러에게 해당 메서드는 재정의 되었다는 것을 알려주는 컴퓨터용 주석
+	// -> 오버라이딩 형식이 맞는지 검사 진행
+	// 자식이 상속받은 getMoney()을 다시 작성(재정의)
+	@Override
+	public int getMoney() {
+		System.out.println(super.getMoney() + 500);
+		return super.getMoney() + 500;
+	}
+	
+	
 }
