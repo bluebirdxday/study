@@ -32,7 +32,7 @@ public class MemberHashMap {
 	public void showAllMember() {
 		Iterator<Integer> ir = hashMap.keySet().iterator();
 		
-		if(ir.hasNext()) { // 다음 키가 있으면
+		while(ir.hasNext()) { // 다음 키가 있으면
 			int key = ir.next();  // key 값을 가져와서
 			 
 			Member member = hashMap.get(key);  // key로부터 value 가져오기
