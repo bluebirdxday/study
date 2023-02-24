@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import edu.kh.exception.user.exception.ScoreInputException;
+
 public class ExceptionService {
 
 	public void ex1() throws IOException {
@@ -98,6 +100,74 @@ public class ExceptionService {
 			// try-catch 구문이 끝난 후 마지막으로 수행
 			// ** 예외가 발생되든 말든 무조건 실행 **
 			System.out.println("프로그램 종료");
+		}
+	}
+	
+	public void ex4() {
+		// throw : 예외 강제 발생 
+		//         ex) throw new IOException();
+		
+		// throws : 해당 메서드에서 발생한 예외를
+		//          호출한 메서드로 던져버리는 예외 처리 방법
+		
+		
+		System.out.println("ex4() 실행");
+		
+		try {
+			methodA();
+		}catch(IOException e) {
+			e.printStackTrace();
+			// 예외가 발생한 지점까지의 stack 메모리를 추적하여 출력
+		}
+	}
+	
+	public void methodA() throws IOException{
+		System.out.println("methodA() 실행");
+		methodB();
+	}
+	
+	public void methodB() throws IOException {
+		
+		System.out.println("methodB() 실행");
+		
+		methodC();
+		// methodC()는 IOException을 던질 수도 있기 때문에 호출 시 예외 처리 구문을 작성해야함
+	}
+	
+	public void methodC() throws IOException {
+		
+		System.out.println("methodC() 실행");
+		throw new IOException();
+	}
+	
+	public void ex5() throws ScoreInputException {
+		// 사용자 정의 예외
+		// - JAVA에서 제공하지 않는 예외 상황이 있을 경우 이를 처리하기 위한 예외 클래스를 사용자가 직접 생성
+	
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("점수 입력(0~100) : ");
+		int score = sc.nextInt();
+		
+		System.out.println("입력한 점수는 : " + score);
+		
+		if(score<0 || score>100) {
+			// 사용자 정의 예외 강제 발생
+			// throw new ScoreInputException();
+			throw new ScoreInputException("0~100 사이 범위를 초과");
+		}
+		
+	
+	}
+	
+	public void startEx5() {
+		
+		try {
+			ex5();
+		}catch(ScoreInputException e) {
+//			e.printStackTrace();
+			System.out.println("예외 내용 : " + e.getMessage());
+			System.out.println("예외처리 발생");
 		}
 	}
 }
