@@ -11,7 +11,6 @@ public class TravelCustomer {
 	private int price;
 	
 	public TravelCustomer(String name, int age, int price) {
-		super();
 		this.name = name;
 		this.age = age;
 		this.price = price;
@@ -33,7 +32,7 @@ public class TravelCustomer {
 
 	@Override
 	public String toString() {
-		return "TravelCustomer [name=" + name + ", age=" + age + ", price=" + price + "]";
+		return "[name=" + name + ", age=" + age + ", price=" + price + "]";
 	}
 
 	
