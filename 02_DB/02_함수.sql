@@ -318,6 +318,13 @@ FROM EMPLOYEE;            -- 둘의 타입은 동일해야함 NVL(숫자형, 문
 
 -- NVL2(컬럼명, NULL X인 경우의 값, NULL O인 경우의 값)
 
+-- EMPLOYEE 테이블에서
+-- 기존에 보너스를 받지 못했던 사원은 0.3으로 변경
+-- 기존에 받았던 사원은 기존 보너스 + 0.2으로 변경
+
+SELECT EMP_NAME, BONUS, NVL2(BONUS, BONUS+0.2, 0.3) "변경된 보너스"
+FROM EMPLOYEE;
+
 
 
 
