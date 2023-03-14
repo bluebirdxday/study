@@ -58,12 +58,3 @@ AND ABSENCE_YN = 'N';
 
 
 
-
-
-
-
-
-
-
-
-
