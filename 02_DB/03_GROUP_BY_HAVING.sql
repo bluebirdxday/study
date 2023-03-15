@@ -65,7 +65,7 @@ SELECT DECODE(SUBSTR(EMP_NO, 8, 1) , '1', '남', '2', '여') 성별
 FROM EMPLOYEE
 GROUP BY DECODE(SUBSTR(EMP_NO, 8, 1) , '1', '남', '2', '여')
 		--> SELECT절 해석이 되지 않아 성별 별칭 사용 불가능
-ORDER BY "인원수";
+ORDER BY "인원 수";
 -- ORDER BY COUNT(*);  같은 의미
 
 
