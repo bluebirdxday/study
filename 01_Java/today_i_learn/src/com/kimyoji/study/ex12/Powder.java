@@ -6,5 +6,4 @@ public class Powder extends Material{
 	public void doPrinting() {
 		System.out.println("Powder 메서드");
 	}
-
 }
