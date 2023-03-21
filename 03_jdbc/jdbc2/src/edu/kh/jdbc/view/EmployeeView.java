@@ -25,7 +25,7 @@ public class EmployeeView {
 
 			try {
 				
-				System.out.println("---- 사원 관리 프로그램 ----");
+				System.out.println("\n\n---- 사원 관리 프로그램 ----");
 				System.out.println("1. 전체 사원 조회");  // 사번, 이름, 부서명, 직급명, 전화번호
 														  // 직급코드 오름차순
 				
@@ -47,7 +47,7 @@ public class EmployeeView {
 				// 이메일, 전화번호, 급여 수정
 				
 				System.out.println("7. 사번으로 사원 퇴사");
-				// ENT_YN, ENT_DATE 수정
+				// ENT_YN, ENT_DATE = SYSDATE 수정
 				
 				System.out.println("8. 사번으로 사원 정보 삭제");
 				// DELETE
@@ -64,9 +64,9 @@ public class EmployeeView {
 				case 2 : selectOne(); break;
 				case 3 : selectName(); break;
 				case 4 : selectAllSalary(); break;
-				case 5 : break;
-				case 6 : break;
-				case 7 : break;
+				case 5 : insertEmployee(); break;
+				case 6 : updateEmployee(); break;
+				case 7 : retireEmployee(); break;
 				case 8 : break;
 				case 0 : System.out.println("\n[프로그램을 종료합니다......]\n"); break;
 				
@@ -225,11 +225,11 @@ public class EmployeeView {
 		
 		System.out.println("\n----------- 급여 범위로 조회 -------------\n");
 		
-		System.out.print("값 1 (이상) : ");
+		System.out.print("최소 급여 : ");
 		int input1 = sc.nextInt();
 		sc.nextLine();
 		
-		System.out.print("값 2 (이하) : ");
+		System.out.print("최대 급여 : ");
 		int input2 = sc.nextInt();
 		sc.nextLine();
 		
@@ -260,5 +260,166 @@ public class EmployeeView {
 	}
 
 	
+	
+	/**
+	 *  사원 정보 추가
+	 */
+	private void insertEmployee() {
+		
+		System.out.println("\n--------- 사원 정보 추가 ----------\n");
+		
+	      System.out.print("이름 : ");
+	      String empName = sc.next();
+	      
+	      System.out.print("주민등록번호 : ");
+	      String empNo = sc.next();
+	      
+	      System.out.print("이메일 : ");
+	      String email = sc.next();
+	      
+	      System.out.print("전화번호(-제외) : ");
+	      String phone = sc.next();
+	      
+	      System.out.print("부서코드(D1~D9) : ");
+	      String deptCode = sc.next();
+	      
+	      System.out.print("직급코드(J1~J7) : ");
+	      String jobCode = sc.next();
+	      
+	      System.out.print("급여등급(S1~S6) : ");
+	      String salLevel = sc.next();
+	      
+	      System.out.print("급여 : ");
+	      int salary = sc.nextInt();
+	      
+	      System.out.print("보너스 : ");
+	      double bonus = sc.nextDouble();
+	      
+	      System.out.print("사수번호 : ");
+	      int managerId = sc.nextInt();
+	      
+	      sc.nextLine(); // 입력 버퍼에 남아있는 개행 문자 제거
+	      
+	      
+	      // Employee 객체를 생성하여 입력 받은 값 담기
+	      Employee emp = new Employee(empName, empNo, email, phone, salary, deptCode, jobCode, salLevel, bonus, managerId);
+
+	      
+	      // 사원 정보를 DB에 삽입하는 서비스 호출
+	      try {
+	    	  
+			int result = service.insertEmployee(emp);
+			
+			if(result > 0) {  // 성공 시
+				System.out.println("[삽입 성공!!!]");
+			}else {
+				System.out.println("[삽입 실패...]");
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("\n[사원 정보 삽입 중 예외 발생]\n");
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	/**
+	 *  사번으로 사원 정보 수정 (이메일, 전화번호, 급여)
+	 */
+	private void updateEmployee() {
+		
+		System.out.println("\n---------- 사번으로 사원 정보 수정 ----------\n");
+		
+		System.out.print("수정할 사원의 사번 : ");
+		int empId = sc.nextInt();
+		
+
+		System.out.print("이메일 : ");
+		String email = sc.next();
+		
+		System.out.print("전화번호 : ");
+		String phone = sc.next();
+		
+		System.out.print("급여 : ");
+		int salary = sc.nextInt();
+		
+		sc.nextLine();
+		
+		// 입력 받은 값을 한번에 전달하기 위한 Employee 객체 생성
+		
+		Employee emp = new Employee();
+		
+		emp.setEmpId(empId);
+		emp.setEmail(email);
+		emp.setPhone(phone);
+		emp.setSalary(salary);
+		
+		
+		// 회원 정보 수정 서비스 호출 후 결과 반환 받기
+		try {
+			
+			int result = service.updateEmployee(emp);
+			
+			
+			if(result > 0)
+				System.out.println("[수정 완료!!]");
+			else
+				System.out.println("[수정 실패...]");
+			
+			
+		} catch (SQLException e) {
+			System.out.println("\n[회원 정보 수정 중 예외 발생]\n");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	/**
+	 * 사번으로 사원 퇴사
+	 */
+	private void retireEmployee() {
+		
+		System.out.println("\n---------- 사번으로 사원 퇴사 -----------\n");
+		
+		System.out.print("퇴사 처리할 사원의 사번 입력 : ");
+		int input = sc.nextInt();
+		
+		System.out.print("정말 퇴사 처리 하시겠습니까? (Y/N) ");
+		char check = sc.next().toUpperCase().charAt(0);
+		
+		if(check == 'N') {
+			System.out.println("[취소되었습니다]");
+			return;
+		}
+		
+		
+		if(check != 'Y') {
+			System.out.println("[잘못된 입력입니다]");
+			return;
+		}
+		
+		sc.nextLine();
+		
+		try {
+			
+			int result = service.retireEmployee(input);
+			
+			
+			if(result > 0)
+				System.out.println("[퇴사 처리가 완료되었습니다]");
+			else
+				System.out.println("[사번이 일치하는 사원이 없습니다]");
+
+		}catch(SQLException e) {
+			System.out.println("[퇴사 처리 중 예외 발생]");
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 }

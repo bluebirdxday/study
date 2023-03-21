@@ -299,7 +299,7 @@ WHERE EMAIL LIKE '_____@%';
 SELECT EMP_ID, EMP_NAME, EMAIL
 FROM EMPLOYEE
 WHERE EMAIL LIKE '____%'
---> 문제점 : 와이들 카드 문자(_)와 패턴에 사용된 일반 문자가 
+--> 문제점 : 와일드 카드 문자(_)와 패턴에 사용된 일반 문자가 
 --		   같은 문자이기 때문에 구분이 안되는 문제가 발생
 
 --> 해결 방법 : ESCAPE 옵션을 이용하여 일반 문자(_)를 구분
