@@ -2,13 +2,11 @@ package edu.kh.jdbc.view;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 
-import edu.kh.jdbc.model.dto.Dept;
 import edu.kh.jdbc.model.dto.Emp;
 import edu.kh.jdbc.model.service.EmpService;
 
@@ -445,37 +443,49 @@ public class EmpView {
 		int input = sc.nextInt();
 		
 		
-		System.out.print("정말 퇴직 처리하시겠습니까? (Y/N) : ");
-		char check = sc.next().toUpperCase().charAt(0);
-		
-		if(check=='N') {
-			System.out.println("[퇴직 처리를 취소합니다.]");
-			return;
-		}
-		
-		if(check!='Y') {
-			System.out.println("[올바르지 않은 입력값입니다.]");
-			return;
-		}
-		
-		
 		
 		try {
 			
-			boolean alreadyRetire = false;
+			// 1. 사번이 일치하는 사원이 있는지 + 있어도 퇴직한 사원인지 확인하는 서비스 호출
+			int check = service.checkEmployee(input);
 			
-			List<Emp> empList = service.selectOutgoingEmp();
-
-			for(int i=0; i<empList.size(); i++) {
-				if(input==empList.get(i).getEmpId())
-					alreadyRetire = true;
-			}
-			
-			
-			if(service.selectEmpId(input)==null || alreadyRetire) {
-				System.out.println("[사번이 일치하지 않거나, 이미 퇴직된 사원입니다.]");
+			if(check==0) {
+				System.out.println("[사번이 일치하는 사원이 존재하지 않습니다]");
 				return;
 			}
+			
+			if(check==1) {
+				System.out.println("[이미 퇴직 처리된 사원입니다]");
+				return;
+			}
+			
+			// 2. 사원이 존재하고 퇴직하지 않으면 정말 퇴직 처리 할 것인지 확인 후 서비스 호출
+			
+			
+//			
+//			boolean alreadyRetire = false;
+//			
+//			
+//			
+//			if(service.selectEmpId(input)==null) {
+//				System.out.println("[사번이 일치하는 사원이 없습니다.]");
+//				return;
+//			}
+//			
+//			
+//			List<Emp> empList = service.selectOutgoingEmp();
+//
+//			for(Emp emp : empList) {
+//				if(input==emp.getEmpId())
+//					alreadyRetire = true;
+//			}
+//			
+//			
+//			if(alreadyRetire) {
+//				System.out.println("[이미 퇴직된 사원입니다.]");
+//				return;
+//			}
+			
 			
 		} catch (SQLException e) {
 			System.out.println("사번으로 사원 정보 수정, 사번 입력 중 예외 발생");
@@ -483,14 +493,31 @@ public class EmpView {
 		}
 		
 		
+		
+		System.out.print("정말 퇴직 처리하시겠습니까? (Y/N) : ");
+		char yesOrNo = sc.next().toUpperCase().charAt(0);
+		
+		if(yesOrNo=='N') {
+			System.out.println("[퇴직 처리를 취소합니다.]");
+			return;
+		}
+		
+		if(yesOrNo!='Y') {
+			System.out.println("[올바르지 않은 입력값입니다.]");
+			return;
+		}
+		
+		
+
+		
 		try {
 			
-			int result = service.retireEmp(input);
+			service.retireEmp(input);
 			
-			if(result>0)
-				System.out.println("[퇴직 처리 완료!]");
-			else
-				System.out.println("[퇴직 처리 실패...]");
+			
+			System.out.println("[퇴직 처리 완료!]");
+			// -> 앞서서 사번에 대한 검증이 끝난 상황
+			// -> 사번이 없어서 수정이 실패하는 경우는 생각할 필요 없음
 			
 		} catch (SQLException e) {
 			System.out.println("[사번이 일치하는 사원 퇴직 처리 중 예외 발생]");
@@ -541,25 +568,29 @@ public class EmpView {
 		System.out.println("\n------------ 부서별 통계 조회 ------------\n");
 		
 		
+		// DTO가 없을 때 Map을 사용하는 이유
+		// 1. DTO를 작성하는게 코드 낭비인 경우
+		// 2. DTO와 Map의 구조가 유사하기 때문에
+		
+		// DTO의 필드를 Map의 Key라고 생각
+		
 		try {
 			
-			Map<String, Dept> deptLinkedHashMap = service.selectDeptStatistics();
 			
-			if(deptLinkedHashMap.isEmpty()) {
-				System.out.println("[데이터가 존재하지 않습니다.]");
-				return;
-			}
+			List<Map<String, Object>> mapList = service.selectDeptStatistics();
 			
 			
-			Iterator<Entry<String, Dept>> ir = deptLinkedHashMap.entrySet().iterator();
-			
-			while(ir.hasNext()) {
+			for(Map<String, Object> map : mapList) {
 				
-				Entry<String, Dept> entry = ir.next();
+//				System.out.printf("%s / %d / %d\n", map.get("deptTitle"), map.get("count"), map.get("avg"));
 				
-				System.out.printf("부서명 : %s  / 인원 수 :  %d  / 급여 평균 : %d\n", entry.getValue().getDepartmentTitle(), entry.getValue().getCount(),
-						entry.getValue().getAvgSalary());
+				Set<String> set = map.keySet();
 				
+				for(String key : set) {
+					System.out.print(map.get(key) + "  ");
+				}
+				
+				System.out.println();
 			}
 			
 			

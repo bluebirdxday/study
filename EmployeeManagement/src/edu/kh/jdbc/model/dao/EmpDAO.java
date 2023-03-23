@@ -24,6 +24,12 @@ public class EmpDAO {
 	private ResultSet rs;
 	
 	
+	// SELECT : executeQuery()
+	// DML : executeUpdate()
+	// PreparedStatement -> ?(placeholder)사용 시 
+	
+	
+	
 	/** 재직중인 사원 전체 조회 SQL 수행 후 반환
 	 * @param conn
 	 * @return empList
@@ -37,10 +43,10 @@ public class EmpDAO {
 		
 		try {
 			
-			String sql = "SELECT EMP_ID, EMP_NAME, DEPT_TITLE, JOB_NAME, SALARY, NVL(PHONE, '없음') PHONE, EMAIL "
+			String sql = "SELECT EMP_ID, EMP_NAME, NVL(DEPT_TITLE, '없음') DEPT_TITLE, JOB_NAME, SALARY, NVL(PHONE, '없음') PHONE, EMAIL "
 					+ "FROM EMPLOYEE "
-					+ "JOIN DEPARTMENT ON(DEPT_ID = DEPT_CODE) "
 					+ "JOIN JOB USING(JOB_CODE) "
+					+ "LEFT JOIN DEPARTMENT ON(DEPT_ID = DEPT_CODE) "
 					+ "WHERE ENT_YN = 'N'"
 					+ "ORDER BY JOB_CODE";
 			
@@ -53,7 +59,7 @@ public class EmpDAO {
 			
 			while(rs.next()) {
 				
-				String empId = rs.getString("EMP_ID");
+				int empId = rs.getInt("EMP_ID");
 				String empName = rs.getString("EMP_NAME");
 				String deptTitle = rs.getString("DEPT_TITLE");
 				String jobName = rs.getString("JOB_NAME");
@@ -62,7 +68,7 @@ public class EmpDAO {
 				String email = rs.getString("EMAIL");
 				
 				
-				empList.add(new Emp(salary, empName, email, phone, salary, deptTitle, jobName));
+				empList.add(new Emp(empId, empName, email, phone, salary, deptTitle, jobName));
 				
 			}
 			
@@ -91,7 +97,8 @@ public class EmpDAO {
 		
 		try {
 			
-			String sql = "SELECT EMP_ID, EMP_NAME, NVL(PHONE, '없음') PHONE, EMAIL, ENT_DATE "
+			String sql = "SELECT EMP_ID, EMP_NAME, NVL(PHONE, '없음') PHONE, EMAIL, "
+					+ "TO_CHAR(ENT_DATE, 'YYYY\"년\" MM\"월\" DD\"일\"') ENT_DATE "
 					+ "FROM EMPLOYEE "
 					+ "WHERE ENT_YN = 'Y' "
 					+ "ORDER BY ENT_DATE";
@@ -108,7 +115,7 @@ public class EmpDAO {
 				String empName = rs.getString("EMP_NAME");
 				String phone = rs.getString("PHONE");
 				String email = rs.getString("EMAIL");
-				String date = rs.getDate("ENT_DATE").toString();
+				String date = rs.getString("ENT_DATE");
 				
 				empList.add(new Emp(empId, empName, phone, email, date));
 			}
@@ -309,18 +316,18 @@ public class EmpDAO {
 
 
 	
-	public int retireEmp(Connection conn, int input) throws SQLException {
+	public void retireEmp(Connection conn, int input) throws SQLException {
 		
-		int result = 0;
 		
 		try {
 			
-			String sql = "UPDATE EMPLOYEE SET ENT_YN = 'Y' WHERE EMP_ID = ?";
+			String sql = "UPDATE EMPLOYEE SET ENT_YN = 'Y',"
+					+ "ENT_DATE = SYSDATE WHERE EMP_ID = ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, input);
 			
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			
 		}finally {
 			
@@ -328,7 +335,6 @@ public class EmpDAO {
 			
 		}
 		
-		return result;
 	}
 
 
@@ -345,10 +351,10 @@ public class EmpDAO {
 		
 		try {
 			
-			String sql = "SELECT EMP_ID, EMP_NAME, DEPT_TITLE, HIRE_DATE "
-					+ "FROM (SELECT EMP_ID, EMP_NAME, DEPT_TITLE, HIRE_DATE "
+			String sql = "SELECT EMP_ID, EMP_NAME, NVL(DEPT_TITLE, '없음') DEPT_TITLE, HIRE_DATE "
+					+ "FROM (SELECT EMP_ID, EMP_NAME, NVL(DEPT_TITLE, '없음') DEPT_TITLE, HIRE_DATE "
 					+ "	  FROM EMPLOYEE "
-					+ "	  JOIN DEPARTMENT ON(DEPT_ID=DEPT_CODE) "
+					+ "	  LEFT JOIN DEPARTMENT ON(DEPT_ID=DEPT_CODE) "
 					+ "	  ORDER BY HIRE_DATE DESC) "
 					+ "WHERE ROWNUM <= 5";
 			
@@ -382,35 +388,44 @@ public class EmpDAO {
 
 	
 	
-	public Map<String, Dept> selectDeptStatistics(Connection conn) throws SQLException {
+	/** 부서별 통계 조회 SQL 수행 후 결과 반환
+	 * @param conn
+	 * @return mapList
+	 * @throws SQLException
+	 */
+	public List<Map<String, Object>> selectDeptStatistics(Connection conn) throws SQLException {
 		
-		
-		Map<String, Dept> deptLinkedHashMap = new LinkedHashMap<>();
+		// 1. 결과 저장용 객체 생성
+		List<Map<String, Object>> mapList = new ArrayList<>();
 		
 		
 		try {
 			
-			String sql = "SELECT DEPT_CODE, DEPT_TITLE, COUNT(EMP_ID) EMP_ID, TRUNC(AVG(SALARY)) SALARY "
+			// 2. SQL 작성 후 수행
+			String sql = "SELECT DEPT_CODE, NVL(DEPT_TITLE, '부서없음') DEPT_TITLE, COUNT(*) 인원, FLOOR(AVG(SALARY)) 평균 "
 					+ "FROM EMPLOYEE "
-					+ "JOIN DEPARTMENT ON(DEPT_ID=DEPT_CODE) "
+					+ "LEFT JOIN DEPARTMENT ON(DEPT_ID=DEPT_CODE) "
 					+ "GROUP BY DEPT_CODE, DEPT_TITLE "
 					+ "ORDER BY DEPT_CODE";
 			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			
-			
 			while(rs.next()) {
 				
-				Dept dept = new Dept();
+				String deptTitle = rs.getString("DEPT_TITLE");
+				int count = rs.getInt("인원");
+				int salaryAvg = rs.getInt("평균");
 				
-				dept.setDepartmentTitle(rs.getString("DEPT_TITLE"));
-				dept.setCount(rs.getInt("EMP_ID"));
-				dept.setAvgSalary(rs.getInt("SALARY"));
+				Map<String, Object> map = new LinkedHashMap<>();  // 입력 순서가 유지되는 Map
 				
-				deptLinkedHashMap.put(rs.getString("DEPT_CODE"), dept);
+				map.put("deptTitle", deptTitle);
+				map.put("count", count);
+				map.put("avg", salaryAvg);
+				
+				mapList.add(map);
+				
 			}
-			
 			
 		}finally {
 			
@@ -419,7 +434,54 @@ public class EmpDAO {
 			
 		}
 		
-		return deptLinkedHashMap;
+		// 5. 결과 반환
+		return mapList;
+	}
+
+
+	
+	/** 존재하는 사원인지, 퇴직한 사원인지 조회하는 SQL 수행 후 결과 반환
+	 * @param conn
+	 * @param input
+	 * @return check
+	 * @throws SQLException
+	 */
+	public int checkEmployee(Connection conn, int input) throws SQLException{
+
+		int check = 0;
+		
+		try {
+			
+			String sql = "SELECT CASE "
+					+ "	WHEN (SELECT COUNT(*) FROM EMPLOYEE WHERE EMP_ID = ?) = 0 "
+					+ "	THEN 0 "
+					+ "	WHEN (SELECT COUNT(*) FROM EMPLOYEE "
+					+ "		  WHERE EMP_ID = ? AND ENT_YN = 'Y') = 1 "
+					+ "	THEN 1 "
+					+ "	ELSE 2 "
+					+ "	END \"CHECK\" "
+					+ "FROM DUAL";
+			
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, input);
+			pstmt.setInt(2, input);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				check = rs.getInt("CHECK");
+			}
+			
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		return check;
 	}
 
 

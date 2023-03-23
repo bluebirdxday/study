@@ -165,22 +165,16 @@ public class EmpService {
 	 * @return result
 	 * @throws SQLException 
 	 */
-	public int retireEmp(int input) throws SQLException {
+	public void retireEmp(int input) throws SQLException {
 		
 		Connection conn = getConnection();
 		
-		int result = dao.retireEmp(conn, input);
+		dao.retireEmp(conn, input);
 		
-		
-		if(result>0)
-			commit(conn);
-		else
-			rollback(conn);
-		
+		commit(conn);
 		
 		close(conn);
 		
-		return result;
 	}
 
 
@@ -205,18 +199,37 @@ public class EmpService {
 
 
 	/** 부서별 통계 조회
-	 * @return empList
+	 * @return mapList
 	 * @throws SQLException 
 	 */
-	public Map<String, Dept> selectDeptStatistics() throws SQLException {
+	public List<Map<String, Object>> selectDeptStatistics() throws SQLException {
 		
 		Connection conn = getConnection();
 		
-		Map<String, Dept> deptLinkedHashMap = dao.selectDeptStatistics(conn);
+		List<Map<String, Object>> mapList = dao.selectDeptStatistics(conn);
 		
 		close(conn);
 		
-		return deptLinkedHashMap;
+		return mapList;
+	}
+
+
+
+
+	/** 존재하는 사원인지, 퇴직한 사원인지 결과를 반환하는 서비스
+	 * @param input
+	 * @return check(0 : 없는 사원, 1: 퇴직한 사원, 2: 재직중인 사원)
+	 * @throws SQLException
+	 */
+	public int checkEmployee(int input) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+		int check = dao.checkEmployee(conn, input);
+		
+		close(conn);
+		
+		return check;
 	}
 
 
