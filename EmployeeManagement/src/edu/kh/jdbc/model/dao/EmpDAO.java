@@ -9,12 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.kh.jdbc.model.dto.Dept;
 import edu.kh.jdbc.model.dto.Emp;
 
 public class EmpDAO {

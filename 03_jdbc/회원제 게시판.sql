@@ -2,6 +2,7 @@
 DROP TABLE "MEMBER";
 
 
+
 -- 회원제 게시판
 
 -- 회원(MEMBER) 테이블
@@ -183,19 +184,40 @@ FROM "COMMENT"
 WHERE BOARD_NO = 1;
 
 
+------------------------------------------------------------------------------
+-- 회원제 게시판 java sql 작성
+
+-- 1) 로그인
+SELECT MEMBER_NO, MEMBER_ID, MEMBER_NM, MEMBER_GENDER,
+TO_CHAR(ENROLL_DT, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') ENROLL_DT  
+FROM "MEMBER"
+WHERE MEMBER_ID = 'user01' 
+AND MEMBER_PW = 'pass01'
+AND UNREGISTER_FL = 'N';
 
 
 
+-- 2)회원가입
+-- 탈퇴하지 않은 회원 중 아이디 중복 검사
+SELECT COUNT(*) FROM "MEMBER"
+WHERE UNREGISTER_FL = 'N'
+AND MEMBER_ID = 'user01';  -- 0이 중복 아님, 1이 이미 있는 회원이라 중복
+
+
+-- 회원가입
+INSERT INTO "MEMBER" 
+VALUES(SEQ_MEMBER_NO.NEXTVAL , 'user01', 'pass01', '유저일', 'F',
+DEFAULT, DEFAULT);
 
 
 
-
-
-
-
-
-
-
+-- 3) 회원 기능 메뉴
+-- 회원 목록 조회(아이디, 이름, 성별(남/여) + 회원 번호 내림차순)
+SELECT MEMBER_ID, MEMBER_NM, 
+		DECODE(MEMBER_GENDER, 'F', '여', '남') MEMBER_GENDER 
+FROM "MEMBER"
+WHERE UNREGISTER_FL = 'N'
+ORDER BY MEMBER_NO DESC;
 
 
 

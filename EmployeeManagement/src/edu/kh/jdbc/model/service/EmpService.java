@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import edu.kh.jdbc.model.dao.EmpDAO;
-import edu.kh.jdbc.model.dto.Dept;
 import edu.kh.jdbc.model.dto.Emp;
 
 public class EmpService {
