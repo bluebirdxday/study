@@ -37,7 +37,7 @@ public class MainView {
 					System.out.println("1. 로그인");
 					System.out.println("2. 회원가입");
 					System.out.println("0. 프로그램 종료");
-					
+				
 					
 					System.out.print("\n메뉴 선택 : ");
 					input = sc.nextInt();

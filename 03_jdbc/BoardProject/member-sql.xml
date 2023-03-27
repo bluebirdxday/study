@@ -14,6 +14,31 @@
 	ORDER BY MEMBER_NO DESC
 	</entry>
 	
+	
+	<!-- 회원 정보(이름, 성별) 수정 -->
+	<entry key = "updateMember">
+	UPDATE "MEMBER"
+	SET MEMBER_NM = ?,
+	MEMBER_GENDER = ?
+	WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 비밀번호 변경 -->
+	<entry key = "updatePassword">
+	UPDATE "MEMBER"
+	SET MEMBER_PW = ?
+	WHERE MEMBER_PW = ?
+	  	  AND MEMBER_NO = ?
+	</entry>
+	
+	
+	<!--  -->
+	<entry key = "unRegisterMember">
+	DELETE FROM "MEMBER"
+	WHERE MEMBER_NO = ?
+	AND MEMBER_PW = ?
+	</entry>
+	
 </properties>
 
 
