@@ -1,4 +1,4 @@
-package edu.kh.jdbc.model.dto;
+package edu.kh.jdbc.model.dto2;
 
 import java.sql.Date;
 

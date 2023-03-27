@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import edu.kh.jdbc.model.dto.Emp;
+import edu.kh.jdbc.model.dto2.Emp;
 import edu.kh.jdbc.model.service.EmpService;
 
 public class EmpView {

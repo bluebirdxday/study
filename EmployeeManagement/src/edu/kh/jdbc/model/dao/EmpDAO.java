@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.kh.jdbc.model.dto.Emp;
+import edu.kh.jdbc.model.dto2.Emp;
 
 public class EmpDAO {
 

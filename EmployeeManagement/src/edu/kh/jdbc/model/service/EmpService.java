@@ -1,6 +1,9 @@
 package edu.kh.jdbc.model.service;
 
-import static edu.kh.jdbc.common.JDBCTemplate.*;
+import static edu.kh.jdbc.common.JDBCTemplate.close;
+import static edu.kh.jdbc.common.JDBCTemplate.commit;
+import static edu.kh.jdbc.common.JDBCTemplate.getConnection;
+import static edu.kh.jdbc.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.kh.jdbc.model.dao.EmpDAO;
-import edu.kh.jdbc.model.dto.Emp;
+import edu.kh.jdbc.model.dto2.Emp;
 
 public class EmpService {
 
