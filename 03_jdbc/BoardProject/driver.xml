@@ -15,7 +15,7 @@
 	<!-- <entry key="url">jdbc:oracle:thin:@115.90.212.22:9000:XE</entry> -->
 	
 	<!-- kh 계정 -->
-	<entry key="user">KIMYOJI</entry>
+	<entry key="user">kimyoji</entry>
 	
 	<!-- kh 계정 비밀번호 -->
 	<entry key="pw">oracle</entry>
