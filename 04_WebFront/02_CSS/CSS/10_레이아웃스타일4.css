@@ -1,0 +1,89 @@
+
+div{
+    border: 1px solid black;
+    box-sizing: border-box;
+    /* width/height 값이 
+        content + padding + border의 합과 같도록
+        content 값을 조정 
+    */
+}
+
+.test{
+    width: 300px;
+    height: 200px;
+    background-color: darkseagreen;
+}
+
+.float-left{
+    width: 50px;
+    height: 50px;
+    background-color:darkorange ;
+
+    /* 요소를 띄워서 왼쪽으로 정렬 */
+    float: left;
+}
+
+.clear-left{
+    clear : left;
+    background-color: springgreen;
+
+    /* 띄워서 왼쪽 정렬하는 상태를 해제 */
+}
+
+
+
+.float-right{
+    width: 30px;
+    height: 30px;
+    background-color:cornflowerblue ;
+
+    /* 요소를 띄워서 오른쪽으로 정렬 */
+    float: right;
+}
+
+
+.clear-right{
+    clear : right;
+    background-color:aqua;
+    /* 띄워서 오른쪽 정렬하는 상태를 해제 */
+}
+
+
+
+.clear-both{
+    clear: both;
+    background-color: white;
+    /*양방향 float 해제 */
+}
+
+
+/* 화면 분할 */
+.container-1{
+    width: 400px;
+    height: 200px;
+}
+
+.bg1{ background-color: red; }
+.bg2{ background-color: orange; }
+.bg3{ background-color: yellow; }
+.bg4{ background-color: green; }
+.bg5{ background-color: blue; }
+.bg6{ background-color: navy; }
+.bg7{ background-color: purple; }
+
+
+.col{
+    width: 50%;
+    height: 100%;
+    float: left;   /* display: inline-block 할 필요 없이 분할 가능 */
+}
+
+
+.row{
+    width: 100%;  /* 얜 안 써도 됨 */
+    height: 50%;
+}
+
+.row2{
+    height: 50%;
+}
