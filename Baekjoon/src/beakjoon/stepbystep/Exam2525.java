@@ -20,10 +20,16 @@ public class Exam2525 {
 		
 		if(minute+tminute >= 60) {
 			hour++;
-			minute += (tminute-60);
-		}
+			minute += tminute - 60;
+		}else
+			minute += tminute;
 		
+		if(hour+thour>=24) {
+			hour += thour - 24;
+		}else
+			hour += thour;
 		
+		System.out.println(hour + " " + minute);
 		
 	}
 }
