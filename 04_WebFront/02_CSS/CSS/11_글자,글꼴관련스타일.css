@@ -1,0 +1,69 @@
+/* color 속성 (글자 색상)*/
+#colorList>li{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#colorList>li:nth-child(1){color : red; }
+#colorList>li:nth-child(2){color : rgb(50, 100, 150); }
+#colorList>li:nth-child(3){color  : rgba(255, 0, 0, 0.5); }
+#colorList>li:nth-child(4){color : #abc; }
+#colorList>li:nth-child(5){color : #8918F5}
+#colorList>li:nth-child(6){color : hsl(360, 100%, 50%)}
+#colorList>li:nth-child(7){color : hsla(360, 100%, 50%, 0.3); }
+
+/* text-decoration 밑줄 긋기 */
+#decorationList>li{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#decorationList>li:nth-child(1){ text-decoration: overline;}
+#decorationList>li:nth-child(2){ text-decoration: line-through;}
+#decorationList>li:nth-child(3){ text-decoration: underline;}
+#decorationList>li:nth-child(4)>a{ text-decoration: none;}
+
+
+/* text-align 정렬 */
+#alignTest>p:nth-child(1){ text-align: left; }
+#alignTest>p:nth-child(2){ text-align: right; }
+#alignTest>p:nth-child(3){ text-align: center; }
+#alignTest>p:nth-child(4){ text-align: justify; }
+
+
+/* line-height */
+#lineHeight{ line-height: 30px; }
+
+/* letter-spacing */
+#letterSpacing{ letter-spacing: -2px;}  /* 넓히는 것보다 좁힐 때 많이 사용 */
+
+
+/* font-family */
+#fontFamily>li:nth-child(1){font-family: '궁서';}
+#fontFamily>li:nth-child(2){font-family: '궁서체';}
+#fontFamily>li:nth-child(3){font-family: 'Pretendard', '궁서체';}
+#fontFamily>li:nth-child(4){font-family: 'Nanum Pen Script', cursive;}
+
+
+@font-face {
+    font-family: 'TTTtangsbudaejjigaeB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/TTTtangsbudaejjigaeB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+#fontFamily>li:nth-child(5){font-family: 'TTTtangsbudaejjigaeB';}
+
+
+
+
+/* 다운 받은 폰트 적용 -> 제일 속도가 빠름 */
+@font-face {
+    font-family: 'HanSans';
+    src: url('BlackHanSans-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#fontFamily>li:nth-child(6){font-family: 'HanSans';}
+
