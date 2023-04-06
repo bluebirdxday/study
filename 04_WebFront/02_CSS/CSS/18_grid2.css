@@ -1,0 +1,54 @@
+.grid-container{
+    background-color: #ccc;
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-auto-rows : 행 개수 지정 X
+                생성되는 모든 행에 동일한 크기를 자동 지정  */
+    grid-auto-rows: 100px;
+
+    gap: 10px;
+}
+
+.item1{
+    /* 1, 2열 병합 */
+    grid-column-start: 1;
+    grid-column-end: 3;
+    /* 열을 구분하는 라인(선)에 매긴 번호를 이용해 병합 */
+}
+
+.item2{
+    /* 3, 4열 병합 */
+    grid-column: 3/5;   /* start/end */
+
+    /* 1, 2행 병합 */
+    grid-row: 1/3;
+}
+
+.item3{
+    /* 2, 3행 병합 */
+    grid-row: 2/4;
+}
+
+.item4{
+    /* 행 2번 라인부터 2행만큼 병합 */
+    grid-row: 2/ span 2;
+    /* span이라는 단위는 라인이 아니라 칸으로 따지는 것 */
+}
+
+.item5{
+    /* 열 3번 라인부터 2열만큼 병합 */
+    grid-column: 3/ span 2;
+}
+
+.item6{
+    /* 열 1번 라인부터 3열만큼 병합 */
+    grid-column: 1 / span 3;
+}
+
+.item8{
+    /* 한 행에 있는 모든 열 병합 */
+    grid-column: 1 / -1;
+    /* -> 1   2   3   4   5 
+            -5 -4 -3 -2 -1  <- */
+}
