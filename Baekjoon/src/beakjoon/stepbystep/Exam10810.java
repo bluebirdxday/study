@@ -10,7 +10,6 @@ public class Exam10810 {
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
 		String[] arr = br.readLine().split(" ");
 		
@@ -26,9 +25,13 @@ public class Exam10810 {
 			int j = Integer.parseInt(arr[1]);
 			int k = Integer.parseInt(arr[2]);
 			
-			for(int o=i; o<)
+			for(int o=i; o<j+1; o++) {
+				bucket[o-1] = k;
+			}
 			
 		}
 		
+		for(int o=0; o<bucket.length; o++)
+			System.out.print(bucket[o] + " ");
 	}
 }
