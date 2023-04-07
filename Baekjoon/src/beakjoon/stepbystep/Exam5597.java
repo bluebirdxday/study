@@ -1,37 +1,24 @@
 package beakjoon.stepbystep;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Exam5597 {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int a = 0;
 		int[] student = new int[30];
-		int[] nonSubmit = new int[2];
-		
-		int count = 0;
-
 		
 		for(int i=0; i<28; i++) {
-			a = Integer.parseInt(br.readLine());
-			student[a-1] = a;
+			student[scan.nextInt()-1] = 1;
 		}
 		
-		for(int i=0; i<student.length; i++) {
-			if(student[i]==0) {
-				nonSubmit[count] = i+1;
-				count++;
-			}
+		
+		for(int i=0; i<30; i++) {
+			if(student[i]==0)
+				System.out.println(i+1);
 		}
 		
-		if(nonSubmit[0] > nonSubmit[1]) {
-			System.out.println(nonSubmit[1]);
-			System.out.println(nonSubmit[0]);
-		}
-		
+		scan.close();
+	
 	}
 }
