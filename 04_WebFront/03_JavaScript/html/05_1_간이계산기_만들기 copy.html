@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_1_간이계산기_만들기</title>
+</head>
+<body>
+    두 수를 입력 받아 버튼에 작성된 연산을 수행하는 계산기 만들기
+    <!--  
+        if, for, while, switch, break, continue
+    -->
+
+    <hr>
+    첫 번째 값 : <input type="text" id="firstValue"> <br>
+    두 번째 값 : <input type="text" id="secondValue"> <br>
+    
+    <button onclick="calc('+')">+</button>
+    <button onclick="calc('-')">-</button>
+    <button onclick="calc('*')">*</button>
+    <button onclick="calc('/')">/</button>
+    <button onclick="calc('%')">%</button>
+
+    <br><br>
+    계산 결과 : <span id="result"><!-- 여기에 결과 출력 --> </span>
+
+    <script>
+        // 작성된 html 요소에 원하는 속성(id, class, onclick)을 작성하고
+        // 필요한 JS코드(function)를 이용하여 계산기 만들기
+
+        function calc(operator){
+            var firstValue = document.getElementById("firstValue").value;
+            var secondValue = document.getElementById("secondValue").value;
+            var result;
+
+            firstValue = Number(firstValue);
+            secondValue = Number(secondValue);
+
+
+            switch(operator){
+                case '+' : result = firstValue + secondValue; break;
+                case '-' : result = firstValue - secondValue; break;
+                case '*' : result = firstValue * secondValue; break;
+                case '/' : result = firstValue / secondValue; break;
+                case '%' : result = firstValue % secondValue; break;
+            }
+
+            document.getElementById("result").innerText = result;
+
+        }
+
+    </script>
+
+</body>
+</html>
