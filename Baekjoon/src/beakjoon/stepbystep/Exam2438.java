@@ -15,5 +15,7 @@ public class Exam2438 {
 			}
 			System.out.println();
 		}
+		
+		scan.close();
 	}
 }

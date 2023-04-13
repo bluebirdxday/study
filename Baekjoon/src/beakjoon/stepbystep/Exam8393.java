@@ -18,5 +18,7 @@ public class Exam8393 {
 		}
 		
 		System.out.println(sum);
+		
+		scan.close();
 	}
 }

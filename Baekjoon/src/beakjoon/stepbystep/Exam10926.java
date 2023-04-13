@@ -12,5 +12,6 @@ public class Exam10926 {
 		
 		System.out.println(input+str);
 		
+		scan.close();
 	}
 }

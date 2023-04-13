@@ -19,5 +19,7 @@ public class Exam2588 {
 		System.out.println(third);
 		
 		System.out.println(first + second*10 + third*100);
+		
+		scan.close();
 	}
 }

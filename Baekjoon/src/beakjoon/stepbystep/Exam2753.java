@@ -22,5 +22,8 @@ public class Exam2753 {
 			System.out.println(1);
 		else 
 			System.out.println(0);
+		
+		scan.close();
 	}
+
 }

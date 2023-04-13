@@ -16,5 +16,7 @@ public class Exam25314 {
 				System.out.print("long ");
 			System.out.print(output);
 		}
+		
+		scan.close();
 	}
 }
