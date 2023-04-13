@@ -20,7 +20,8 @@ public class Exam1157 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int[] count = new int[26];
 		int max = 0;
-		int maxCount = 0;
+		char maxChar = '0';
+		int maxCount = -1;
 		
 		String str = br.readLine().toUpperCase();
 		
@@ -29,9 +30,11 @@ public class Exam1157 {
 		}
 		
 		for(int i=0; i<count.length; i++) {
+			
 			if(count[i]>max) {
-				max = i;
-				maxCount=0;
+				max = count[i];
+				maxChar = (char)(i + 65);
+				maxCount=-1;
 			}
 			
 			if(count[i]==max)
@@ -43,7 +46,7 @@ public class Exam1157 {
 			System.out.println("?");
 		
 		else
-			System.out.println((char)(max+65));
+			System.out.println(maxChar);
 		
 	}
 }
