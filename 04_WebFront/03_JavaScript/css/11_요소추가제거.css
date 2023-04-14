@@ -1,0 +1,18 @@
+.row{
+    margin: 5px 0;
+}
+
+/* X버튼 */
+.remove-row{
+    display: inline-block;      /* span 태그라서 inline이라 조절이 안되기 때문에 바꿔줌 */
+    margin-left: 3px;
+    font-size: 20px;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.remove-row:hover{
+    color: red;
+    font-weight: bold;
+}

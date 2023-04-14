@@ -3,6 +3,7 @@ package beakjoon.stepbystep;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Exam25206 {
@@ -11,31 +12,29 @@ public class Exam25206 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
+		String[] grade = {"A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F"};
+		float[] score = {4.5f, 4.0f, 3.5f, 3.0f, 2.5f, 2.0f, 1.5f, 1.0f, 0.0f};
+		
+		float majorSum = 0;  // 전공과목별 (학점*과목평점)의 합
+		float scoreSum = 0;  // 학점의 총합
+		
+		
 		for(int i=0; i<20; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
-			String subject = st.nextToken();
-			double score = Double.parseDouble(st.nextToken());
-			String grade = st.nextToken();
 			
+			st.nextToken();
+			float s = Float.parseFloat(st.nextToken());
+			String g = st.nextToken();
+			
+			if(!g.equals("P")) {
+				majorSum += s * score[Arrays.binarySearch(grade, g)];
+				scoreSum += s;
+			}
 		}
-	
-	
-	}
-	
-	public static double calcGrade(String grade) {
-		double score;
 		
-		switch(grade) {
-		case "A+" : score = 4.5; break;
-		case "A0" : score = 4.0; break;
-		case "B+" : score = 3.5; break;
-		case "B0" : score = 3.0; break;
-		case "C+" : score = 2.5; break;
-		case "C0" : score = 2.0; break;
-		case "D+" : score = 1.5; break;
-		case "D0" : score = 1.0; break;
-		default : score = 0.0; break;
-		}
-		return score;
+		float average = majorSum/scoreSum;
+		System.out.printf("%.6f", average);
+			
 	}
+
 }
