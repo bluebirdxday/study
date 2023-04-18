@@ -1,0 +1,10 @@
+#content{
+    /* textarea 크기 변경 불가 */
+    resize: none;
+    font-family: 'Pretendard';
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}
