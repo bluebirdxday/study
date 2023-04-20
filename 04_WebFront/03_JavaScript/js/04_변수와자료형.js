@@ -158,7 +158,7 @@ function typeTest(){
     
     
     // function (* 함수도 자료형이다!!! *)
-    const sumFn = function(n1, n2){ return n1 + num2;}
+    const sumFn = function(n1, n2){ return n1 + n2;}
     box.innerHTML += "<br>sumFn : " + sumFn + "/" + typeof sumFn;
 
     // 함수명만 작성 : 함수에 작성된 코드가 그대로 출력
@@ -172,6 +172,6 @@ function typeTest(){
 }
 
 
-function doubleFn(fn){   // 전달받은 함수의 결곽를 2배로 반환하는 함수
+function doubleFn(fn){   // 전달받은 함수의 결과를 2배로 반환하는 함수
     return fn(1,2) * 2;
 }

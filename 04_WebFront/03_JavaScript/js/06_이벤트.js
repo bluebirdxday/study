@@ -90,7 +90,7 @@ const opList = document.getElementsByClassName("op");
 
 // for of 구문 (향상된 for문)
 //  -> 배열(Array), 유사 배열(HTMLCollection, NodeList, ...)
-//       위와 같이 배열 형태의 요소를 순타 접근하는 용도의 반복문
+//       위와 같이 배열 형태의 요소를 순차 접근하는 용도의 반복문
 for(let op of opList){
     op.addEventListener("click", function(e){
         document.getElementById("result").innerText 
