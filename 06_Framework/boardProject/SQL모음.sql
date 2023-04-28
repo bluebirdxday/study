@@ -88,7 +88,11 @@ AND MEMBER_EMAIL = '?'
 AND MEMBER_PW = '?'
 
 
+-- user01의 비밀번호 변경
+UPDATE "MEMBER" 
+SET MEMBER_PW = '$2a$10$ws17S9.PXb3bxolSb4snG.6y/BzPl7RNrM8Ill0MRzta2YzugG0aC';
 
+COMMIT;
 
 
 
