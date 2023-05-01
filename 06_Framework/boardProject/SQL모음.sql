@@ -95,6 +95,13 @@ SET MEMBER_PW = '$2a$10$ws17S9.PXb3bxolSb4snG.6y/BzPl7RNrM8Ill0MRzta2YzugG0aC';
 COMMIT;
 
 
+-- 회원번호가 일치하는 회원의 비밀번호 조회
+SELECT MEMBER_PW
+FROM "MEMBER"
+WHERE MEMBER_NO=1;
+
+
+-- 회원번호가 일치하는 회원의 비밀번호 변경
 
 
 
