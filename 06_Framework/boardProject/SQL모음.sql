@@ -102,8 +102,12 @@ WHERE MEMBER_NO=1;
 
 
 -- 회원번호가 일치하는 회원의 비밀번호 변경
+UPDATE "MEMBER"
+SET MEMBER_PW = '?'
+WHERE MEMBER_NO = '?';
 
-
+SELECT *
+FROM "MEMBER";
 
 
 
