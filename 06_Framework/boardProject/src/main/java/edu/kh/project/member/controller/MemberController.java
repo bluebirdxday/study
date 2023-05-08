@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -50,7 +49,7 @@ public class MemberController {
 	
 	// 로그인 (/member/login), POST 방식 처리
 	// Class에 작성한 /member를 제외한 나머지 부분을 주소로 작성
-//	@RequestMapping(value="/login", method=RequestMethod.POST)
+	//	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(HttpServletRequest req) {
 		// 파라미터 전달 방법 1 : HttpServletRequest를 이용하는 방법
 		// 	-> Controller 메서드에 매개변수로 HttpServletRequest 작성
@@ -167,6 +166,8 @@ public class MemberController {
 		
 		// HttpServletResponse resp
 		// : 서버 -> 클라이언트 응답 방법을 가지고 있는 객체
+		
+		// RedirectAttributes ra : 리다이렉트 시 데이터를 request scope로 전달하는 객체
 		
 		
 		// 로그인 서비스 호출
