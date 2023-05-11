@@ -155,91 +155,90 @@ public class BoardController {
 			if(loginMember == null || 
 					loginMember.getMemberNo() != board.getMemberNo()) {
 				
-			}
-			
-			// 2) 쿠키 얻어오기 
-			Cookie c = null;
-			
-			// 요청에 담겨있는 모든 쿠키 얻어오기
-			Cookie[] cookies = req.getCookies();
-			
-			if(cookies != null) {		// 쿠키가 존재할 경우
-				// 쿠키 중 "readBoardNo"라는 쿠키를 찾아서 c에 대입
-				for(Cookie cookie : cookies) {
-					if(cookie.getName().equals("readBoardNo")) {
-						c = cookie;
-						break;
+				// 2) 쿠키 얻어오기 
+				Cookie c = null;
+				
+				// 요청에 담겨있는 모든 쿠키 얻어오기
+				Cookie[] cookies = req.getCookies();
+				
+				if(cookies != null) {		// 쿠키가 존재할 경우
+					// 쿠키 중 "readBoardNo"라는 쿠키를 찾아서 c에 대입
+					for(Cookie cookie : cookies) {
+						if(cookie.getName().equals("readBoardNo")) {
+							c = cookie;
+							break;
+						}
 					}
 				}
-			}
 			
-			// 3) 기존 쿠키가 없거나 (c==null)
-			// 		존재는 하나 현재 게시글 번호가 
-			//  	쿠키에 저장되지 않은 경우(오늘 해당 게시글 본 적 없음)
-			int result = 0;
-			
-			if(c==null) {
-				// 쿠키가 존재하지 않음 => 하나 새로 생성
-				c = new Cookie("readBoardNo", "|" + boardNo + "|");
+				// 3) 기존 쿠키가 없거나 (c==null)
+				// 		존재는 하나 현재 게시글 번호가 
+				//  	쿠키에 저장되지 않은 경우(오늘 해당 게시글 본 적 없음)
+				int result = 0;
 				
-				// 조회수 증가 서비스 호출
-				result = service.updateReadCount(boardNo);
-			} else {
-				
-				// 현재 게시글 번호가 쿠키에 있는지 확인
-				// Cookie.getValue() : 쿠키에 저장된 모든 값을 읽어옴 -> String으로 반환
-				
-				// String.indexOf("문자열") : 찾는 문자열이 몇 번 인덱스에 존재하는지 반환
-				//											없으면 -1반환
-				if(c.getValue().indexOf("|" + boardNo + "|") == -1) {
-					// 쿠키에 현재 게시글 번호가 없다면 
-					
-					// 기존 값에 게시글 번호 추가해서 다시 세팅
-					c.setValue(c.getValue() + "|" + boardNo + "|");
+				if(c==null) {
+					// 쿠키가 존재하지 않음 => 하나 새로 생성
+					c = new Cookie("readBoardNo", "|" + boardNo + "|");
 					
 					// 조회수 증가 서비스 호출
 					result = service.updateReadCount(boardNo);
+				} else {
+					
+					// 현재 게시글 번호가 쿠키에 있는지 확인
+					// Cookie.getValue() : 쿠키에 저장된 모든 값을 읽어옴 -> String으로 반환
+					
+					// String.indexOf("문자열") : 찾는 문자열이 몇 번 인덱스에 존재하는지 반환
+					//											없으면 -1반환
+					if(c.getValue().indexOf("|" + boardNo + "|") == -1) {
+						// 쿠키에 현재 게시글 번호가 없다면 
+						
+						// 기존 값에 게시글 번호 추가해서 다시 세팅
+						c.setValue(c.getValue() + "|" + boardNo + "|");
+						
+						// 조회수 증가 서비스 호출
+						result = service.updateReadCount(boardNo);
+					}
 				}
+				
+				
+				// 4) 조회수 증가 성공 시 
+				// 		쿠키가 적용되는 경로, 수명(당일 23시 59분 59초) 지정
+				if(result>0) {
+					board.setReadCount(board.getReadCount()+1);
+					// 조회된 board 조회수와 DB 조회수 동기화
+					
+					// 적용 경로 설정
+					c.setPath("/");		//  "/" 이하 경로 요청 시 쿠키를 서버로 전달
+					
+					// 수명 지정
+					Calendar cal = Calendar.getInstance();		// 싱글톤 패턴
+					
+					cal.add(cal.DATE, 1);
+					
+					// 날짜 표기법 변경 객체
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					
+					Date a = new Date(); 	// 현재 시간
+					Date temp = new Date(cal.getTimeInMillis());	// 내일 (24시간 후)
+					
+					Date b = sdf.parse(sdf.format(temp));	// 내일 (0시 0분 0초)
+					
+					
+					// 내일 0시 0분 0초 - 현재시간
+					long diff = (b.getTime()-a.getTime())	/1000;
+					// -> 내일 0시 0분 0초까지 남은 시간을 초단위로 반환
+					
+					c.setMaxAge((int)diff);	// 수명 설정
+					
+					resp.addCookie(c);		// 응답객체를 이용해서 클라이언트에게 전달
+				}
+				
 			}
-			
-			
-			// 4) 조회수 증가 성공 시 
-			// 		쿠키가 적용되는 경로, 수명(당일 23시 59분 59초) 지정
-			if(result>0) {
-				board.setReadCount(board.getReadCount()+1);
-				// 조회된 board 조회수와 DB 조회수 동기화
-				
-				// 적용 경로 설정
-				c.setPath("/");		//  "/" 이하 경로 요청 시 쿠키를 서버로 전달
-				
-				// 수명 지정
-				Calendar cal = Calendar.getInstance();		// 싱글톤 패턴
-				
-				cal.add(cal.DATE, 1);
-				
-				// 날짜 표기법 변경 객체
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				
-				Date a = new Date(); 	// 현재 시간
-				Date temp = new Date(cal.getTimeInMillis());	// 내일 (24시간 후)
-				
-				Date b = sdf.parse(sdf.format(temp));	// 내일 (0시 0분 0초)
-				
-				
-				// 내일 0시 0분 0초 - 현재시간
-				long diff = (b.getTime()-a.getTime())	/1000;
-				// -> 내일 0시 0분 0초까지 남은 시간을 초단위로 반환
-				
-				c.setMaxAge((int)diff);	// 수명 설정
-				
-				resp.addCookie(c);		// 응답객체를 이용해서 클라이언트에게 전달
-			}
-			
 			
 			// --------------------------------------------------------------------
-			
 			path = "board/boardDetail";		// forward할 jsp 경로
 			model.addAttribute("board", board);
+			
 			
 		}else {		// 조회 결과가 없을 경우
 			path = "redirect:/board/" + boardCode;

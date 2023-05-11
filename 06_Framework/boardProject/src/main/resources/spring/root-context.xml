@@ -43,18 +43,18 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	
 	<!-- SqlSessionTemplate : 기본 SQL 실행 + 트랜잭션 관리 역할을 하는 SqlSession을 생성할 수 있게 
 		하는 객체(Spring bean으로 등록해야함.) -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-
 		<constructor-arg ref="sqlSessionFactoryBean" />
-
 	</bean>
+	
+	
 	<!-- 스프링에서 사용하는 proxy를 이용한 트랜잭션 제어가 안될 경우 추가적인 트랜잭션 매니저를 추가해서 문제 해결 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-
 		<property name="dataSource" ref="dataSource" />
-
 	</bean>
 	
 	
