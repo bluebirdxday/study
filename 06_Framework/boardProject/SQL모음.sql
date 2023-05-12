@@ -629,21 +629,68 @@ SELECT * FROM "BOARD";
 
 -- INSERT + SUBQUERY
 
-
-SELECT '웹접근경로' IMG_PATH, '변경명' IMG_RENAME, '원본명' IMG_ORIGINAL,
-		0 IMG_ORDER, 2005 BOARD_NO
-		FROM DUAL
-
+INSERT INTO "BOARD_IMG" 
+SELECT SEQ_IMG_NO.NEXTVAL, A.* 
+FROM(SELECT '웹접근경로' IMG_PATH, '변경명' IMG_RENAME, '원본명' IMG_ORIGINAL,
+		0 IMG_ORDER, 1489 BOARD_NO
+FROM DUAL
 UNION ALL
-
 SELECT '웹접근경로' IMG_PATH, '변경명' IMG_RENAME, '원본명' IMG_ORIGINAL,
-		1 IMG_ORDER, 2005 BOARD_NO
-		FROM DUAL
-
+		1 IMG_ORDER, 1489 BOARD_NO
+FROM DUAL
 UNION ALL
-
 SELECT '웹접근경로' IMG_PATH, '변경명' IMG_RENAME, '원본명' IMG_ORIGINAL,
-		2 IMG_ORDER, 2005 BOARD_NO
-		FROM DUAL
+		2 IMG_ORDER, 1489 BOARD_NO
+FROM DUAL
+)A;
+
+SELECT * FROM "BOARD_IMG" ORDER BY 1;
+
+ROLLBACK;
+
+
+-- 게시글 수정
+UPDATE "BOARD" SET
+BOARD_TITLE = #{boardTitle},
+BOARD_CONTENT = #{boardContent},
+B_UPDATE_DATE = SYSDATE 
+WHERE BOARD_CODE = #{boardCode}
+AND BOARD_NO = #{boardNo}
+;
+
+-- 이미지 삭제
+DELETE FROM "BOARD_IMG"
+WHERE BOARD_NO = #{boardNo}
+AND IMG_ORDER IN(${deleteList})
+;
+
+
+-- 이미지 수정
+UPDATE "BOARD_IMG" SET
+IMG_PATH = #{imagePath},
+IMG_ORIGINAL = #{imageOriginal},
+IMG_RENAME = #{imageReName}
+WHERE BOARD_NO = #{boardNo}
+AND IMG_ORDER = #{imageOrder}
+;
+
+
+INSERT INTO "BOARD_IMG"
+VALUES(SEQ_IMG_NO.NEXTVAL, #{imagePath}, #{imageReName},
+		#{imageOriginal}, #{imageOrder}, #{boardNo}
+)
+;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
