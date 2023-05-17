@@ -232,4 +232,6 @@ public class BoardServiceImpl2 implements BoardService2{
 	public int boardUpdateDel(int boardNo) {
 		return dao.boardUpdateDel(boardNo);
 	}
+	
+
 }
