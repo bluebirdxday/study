@@ -395,6 +395,11 @@
 			ORDER BY READ_COUNT DESC, BOARD_NO DESC)
 		<![CDATA[ WHERE ROWNUM <= 10  ]]>
 	</select>
+	
+	
+	<select id="selectImageListAll" resultType="string">
+		SELECT IMG_RENAME FROM BOARD_IMG
+	</select>
 
 
 </mapper>
