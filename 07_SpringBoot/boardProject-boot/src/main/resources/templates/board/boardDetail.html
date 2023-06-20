@@ -15,7 +15,9 @@
 
 
     <link rel="stylesheet" th:href="@{/css/board/boardDetail-style.css}">
+
     <link rel="stylesheet" th:href="@{/css/board/comment-style.css}">
+
 
 </head>
 <body>
@@ -190,7 +192,7 @@
         // 타임리프를 사용하면 자바 객체를 자바스크립트로 바꾸는 게 편함
 
         const boardNo = /*[[${board.boardNo}]]*/  "게시글 번호";
-        const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
+        let loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
                                                         /* safe navigation을 이용해서 nullpointer exception 방지 */
 
         if(loginMemberNo == null) loginMemberNo = "";
